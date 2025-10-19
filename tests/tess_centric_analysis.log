@@ -1,0 +1,157 @@
+
+======================================================================
+TESS-CENTRIC TRAINING STRATEGIES
+Leveraging TESS's superior generalization capability
+======================================================================
+
+📂 Loading datasets...
+✅ Kepler: (9564, 141)
+✅ TESS: (7699, 87)
+
+======================================================================
+PREPARING DATA FOR TESS-CENTRIC TRAINING
+======================================================================
+
+✅ Prepared Data:
+   Kepler: 9201 samples
+   TESS: 7559 samples
+   Features: 32
+
+======================================================================
+RUNNING ALL TESS-CENTRIC STRATEGIES
+======================================================================
+
+======================================================================
+OPTION A: TESS-FIRST TRAINING (80% TESS + 20% Kepler)
+======================================================================
+
+📊 Training Set Composition:
+   TESS: 6047 (80.0%)
+   Kepler: 1511 (20.0%)
+   Total: 7558
+
+📡 Testing on TESS Test Set:
+     Test samples: 1512
+     Accuracy: 0.7593
+     F1 Score: 0.7460
+
+     Class Distribution:
+       CANDIDATE: 1023 (67.7%)
+       CONFIRMED: 243 (16.1%)
+       FALSE POSITIVE: 246 (16.3%)
+
+📡 Testing on Kepler Test Set:
+     Test samples: 7690
+     Accuracy: 0.7662
+     F1 Score: 0.7651
+
+     Class Distribution:
+       CANDIDATE: 1535 (20.0%)
+       CONFIRMED: 2304 (30.0%)
+       FALSE POSITIVE: 3851 (50.1%)
+
+======================================================================
+OPTION B: TESS-ONLY WITH KEPLER FINE-TUNING
+======================================================================
+
+🔵 PHASE 1: Training Base Model on TESS
+   TESS Training: 6047
+   TESS Validation: 1512
+
+   Validating base model on TESS:
+     Test samples: 1512
+     Accuracy: 0.7586
+     F1 Score: 0.7421
+
+     Class Distribution:
+       CANDIDATE: 1007 (66.6%)
+       CONFIRMED: 253 (16.7%)
+       FALSE POSITIVE: 252 (16.7%)
+
+🟢 PHASE 2: Fine-tuning on Kepler
+   Kepler Fine-tuning: 1050
+   Kepler Test: 450
+
+   Testing fine-tuned model on Kepler:
+     Test samples: 450
+     Accuracy: 0.7289
+     F1 Score: 0.7284
+
+     Class Distribution:
+       CANDIDATE: 150 (33.3%)
+       CONFIRMED: 150 (33.3%)
+       FALSE POSITIVE: 150 (33.3%)
+
+======================================================================
+OPTION C: PROGRESSIVE TESS EMPHASIS
+======================================================================
+
+📊 Testing Ratio: 90% TESS + 10% Kepler
+----------------------------------------------------------------------
+   Training: 6400 (5760 TESS + 640 Kepler)
+   TESS Test: Acc=0.7667, F1=0.7508
+   Kepler Test: Acc=0.7812, F1=0.7788
+
+📊 Testing Ratio: 80% TESS + 20% Kepler
+----------------------------------------------------------------------
+   Training: 6400 (5120 TESS + 1280 Kepler)
+   TESS Test: Acc=0.7586, F1=0.7442
+   Kepler Test: Acc=0.8156, F1=0.8111
+
+📊 Testing Ratio: 70% TESS + 30% Kepler
+----------------------------------------------------------------------
+   Training: 6400 (4480 TESS + 1920 Kepler)
+   TESS Test: Acc=0.7589, F1=0.7426
+   Kepler Test: Acc=0.7792, F1=0.7733
+
+📊 Testing Ratio: 60% TESS + 40% Kepler
+----------------------------------------------------------------------
+   Training: 6400 (3840 TESS + 2560 Kepler)
+   TESS Test: Acc=0.7396, F1=0.7200
+   Kepler Test: Acc=0.7703, F1=0.7684
+
+📊 Testing Ratio: 50% TESS + 50% Kepler
+----------------------------------------------------------------------
+   Training: 6400 (3200 TESS + 3200 Kepler)
+   TESS Test: Acc=0.7575, F1=0.7408
+   Kepler Test: Acc=0.7812, F1=0.7780
+
+======================================================================
+📈 PROGRESSIVE RATIO ANALYSIS SUMMARY
+======================================================================
+ tess_ratio  kepler_ratio  tess_train_n  kepler_train_n  tess_accuracy  tess_f1  kepler_accuracy  kepler_f1  avg_accuracy   avg_f1  telescope_gap
+        0.9           0.1          5760             640       0.766667 0.750810         0.781250   0.778792      0.773958 0.764801       0.014583
+        0.8           0.2          5120            1280       0.758594 0.744221         0.815625   0.811097      0.787109 0.777659       0.057031
+        0.7           0.3          4480            1920       0.758929 0.742632         0.779167   0.773327      0.769048 0.757979       0.020238
+        0.6           0.4          3840            2560       0.739583 0.720008         0.770312   0.768434      0.754948 0.744221       0.030729
+        0.5           0.5          3200            3200       0.757500 0.740811         0.781250   0.778000      0.769375 0.759406       0.023750
+
+🏆 BEST RATIO: 80% TESS + 20% Kepler
+   Average F1: 0.7777
+   Telescope Gap: 5.70%
+
+======================================================================
+COMPREHENSIVE STRATEGY COMPARISON
+======================================================================
+
+📊 OPTION A: TESS-First (80% TESS + 20% Kepler)
+   TESS Test: 0.7593 (F1: 0.7460)
+   Kepler Test: 0.7662 (F1: 0.7651)
+   Telescope Gap: 0.69%
+
+📊 OPTION B: Fine-Tuning Strategy
+   TESS (Base): 0.7586 (F1: 0.7421)
+   Kepler (Fine-tuned): 0.7289 (F1: 0.7284)
+   TESS (After fine-tune): 0.7586 (F1: 0.7421)
+
+📊 OPTION C: Progressive Ratios
+   Best Ratio: 80% TESS + 20% Kepler
+   Average Accuracy: 0.7871
+   Average F1: 0.7777
+   Telescope Gap: 5.70%
+
+💾 Results saved to tess_centric_strategy_comparison.csv
+
+======================================================================
+✅ TESS-CENTRIC ANALYSIS COMPLETE!
+======================================================================

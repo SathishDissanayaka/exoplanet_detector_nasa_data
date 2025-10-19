@@ -1,0 +1,212 @@
+
+======================================================================
+TELESCOPE DOMAIN ADAPTATION ANALYSIS
+Analyzing transfer learning between Kepler and TESS missions
+======================================================================
+
+📂 Loading datasets...
+✅ Kepler data: (9564, 141)
+✅ TESS data: (7699, 87)
+======================================================================
+PREPARING DATA
+======================================================================
+
+✅ Merged dataset shape: (17263, 261)
+✅ Found 32 feature columns
+
+📊 Data Split:
+  Kepler samples: 9564
+  TESS samples: 7699
+  Kepler: 9564 → 9201 rows after cleaning
+  TESS: 7699 → 7559 rows after cleaning
+
+======================================================================
+FEATURE DISTRIBUTION ANALYSIS
+======================================================================
+
+🔍 Features with Largest Distribution Differences:
+              feature  ks_statistic     ks_pvalue  mean_diff_pct
+     merged_koi_time0      1.000000  0.000000e+00       0.185377
+            merged_ra      0.743253  0.000000e+00      38.671406
+           merged_dec      0.696317  0.000000e+00      97.415573
+ merged_koi_srad_err1      0.687902  0.000000e+00      79.453797
+     merged_koi_depth      0.514617  0.000000e+00      65.296199
+merged_koi_slogg_err2      0.497640 3.255893e-321      22.139872
+ merged_koi_srad_err2      0.433277 6.244990e-321      81.145853
+      merged_koi_prad      0.430863  0.000000e+00      89.962004
+merged_koi_slogg_err1      0.403335 8.873419e-321      44.822839
+ merged_koi_prad_err2      0.355967 1.100778e-320      95.582487
+
+📊 Summary:
+  Total features analyzed: 28
+  Significantly different (p<0.05): 28 (100.0%)
+
+======================================================================
+TRAINING TELESCOPE-SPECIFIC BASELINES
+======================================================================
+
+📡 Training Kepler-Only Baseline...
+  ✅ Kepler Baseline
+     Training samples: 7360
+     Test samples: 1841
+     Accuracy: 0.7892
+     F1 Score: 0.7862
+
+📡 Training TESS-Only Baseline...
+  ✅ TESS Baseline
+     Training samples: 6047
+     Test samples: 1512
+     Accuracy: 0.7573
+     F1 Score: 0.7401
+
+======================================================================
+DOMAIN ADAPTATION: MIXED TRAINING (80% Kepler + 20% TESS)
+======================================================================
+
+📊 Training Set Composition:
+  Kepler: 7360 (80.0%)
+  TESS: 1840 (20.0%)
+  Total: 9200
+
+📡 Testing on Kepler Data:
+     Test samples: 1841
+     Accuracy: 0.7930
+     F1 Score: 0.7902
+
+     Class Distribution:
+       CANDIDATE: 358 (19.4%)
+       CONFIRMED: 576 (31.3%)
+       FALSE POSITIVE: 907 (49.3%)
+
+📡 Testing on TESS Data:
+     Test samples: 5719
+     Accuracy: 0.7304
+     F1 Score: 0.7013
+
+     Class Distribution:
+       CANDIDATE: 3795 (66.4%)
+       CONFIRMED: 962 (16.8%)
+       FALSE POSITIVE: 962 (16.8%)
+
+======================================================================
+REVERSE TRANSFER EXPERIMENTS
+======================================================================
+
+🔄 Experiment 1: Train on Kepler → Test on TESS
+
+  📊 Source Telescope Validation:
+     Training samples: 7360
+     Validation samples: 1841
+     Accuracy: 0.7892
+     F1 Score: 0.7862
+
+  🎯 Target Telescope Test:
+     Test samples: 7559
+     Accuracy: 0.3171
+     F1 Score: 0.3190
+
+     Class Distribution:
+       CANDIDATE: 5036 (66.6%)
+       CONFIRMED: 1266 (16.7%)
+       FALSE POSITIVE: 1257 (16.6%)
+
+🔄 Experiment 2: Train on TESS → Test on Kepler
+
+  📊 Source Telescope Validation:
+     Training samples: 6047
+     Validation samples: 1512
+     Accuracy: 0.7573
+     F1 Score: 0.7401
+
+  🎯 Target Telescope Test:
+     Test samples: 9201
+     Accuracy: 0.6054
+     F1 Score: 0.6214
+
+     Class Distribution:
+       CANDIDATE: 1875 (20.4%)
+       CONFIRMED: 2744 (29.8%)
+       FALSE POSITIVE: 4582 (49.8%)
+
+======================================================================
+COMPREHENSIVE SUMMARY REPORT
+======================================================================
+
+📊 BASELINE MODELS (Telescope-Specific):
+----------------------------------------------------------------------
+
+  Kepler Only:
+    Training Size: 7360
+    Test Size: 1841
+    Accuracy: 0.7892
+    F1 Score: 0.7862
+
+  Tess Only:
+    Training Size: 6047
+    Test Size: 1512
+    Accuracy: 0.7573
+    F1 Score: 0.7401
+
+
+📊 DOMAIN ADAPTATION (Mixed Training):
+----------------------------------------------------------------------
+
+  Training Composition:
+    Kepler: 7360
+    TESS: 1840
+
+  Performance on Kepler Test Set:
+    Accuracy: 0.7930
+    F1 Score: 0.7902
+
+  Performance on TESS Test Set:
+    Accuracy: 0.7304
+    F1 Score: 0.7013
+
+
+📊 REVERSE TRANSFER LEARNING:
+----------------------------------------------------------------------
+
+  Kepler → TESS Transfer:
+    Source (Kepler) Validation - Accuracy: 0.7892, F1: 0.7862
+    Target (TESS) Test - Accuracy: 0.3171, F1: 0.3190
+    Transfer Gap: 47.21%
+
+  TESS → Kepler Transfer:
+    Source (TESS) Validation - Accuracy: 0.7573, F1: 0.7401
+    Target (Kepler) Test - Accuracy: 0.6054, F1: 0.6214
+    Transfer Gap: 15.19%
+
+
+🔑 KEY INSIGHTS:
+======================================================================
+
+1. Feature Distribution Shift:
+   28/28 features show significant distribution differences
+   This indicates substantial domain shift between telescopes
+
+2. Transfer Learning Performance:
+   Kepler→TESS transfer gap: 47.21%
+   TESS→Kepler transfer gap: 15.19%
+   → TESS generalizes better to Kepler than vice versa
+
+3. Mixed Training Benefits:
+   Adding 20% TESS data helps balance telescope bias
+   Kepler test accuracy: 0.7930
+   TESS test accuracy: 0.7304
+   Difference: 6.27%
+
+💾 Results saved to telescope_domain_adaptation_results.csv
+
+======================================================================
+✅ ANALYSIS COMPLETE!
+======================================================================
+
+Results Summary:
+    experiment train_telescope test_telescope  train_size  test_size  accuracy  f1_score
+   kepler_only          kepler         kepler        7360       1841  0.789245  0.786225
+     tess_only            tess           tess        6047       1512  0.757275  0.740110
+mixed_training           mixed         kepler        9200       1841  0.793047  0.790167
+mixed_training           mixed           tess        9200       5719  0.730372  0.701275
+kepler_to_tess          kepler           tess        7360       7559  0.317105  0.318969
+tess_to_kepler            tess         kepler        6047       9201  0.605369  0.621405

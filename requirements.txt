@@ -1,0 +1,13 @@
+streamlit
+pandas
+numpy
+supabase
+python-dotenv
+scikit-learn
+matplotlib
+seaborn
+imbalanced-learn
+lightgbm
+altair
+catboost
+astropy
