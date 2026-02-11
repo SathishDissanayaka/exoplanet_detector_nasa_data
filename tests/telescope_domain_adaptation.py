@@ -7,7 +7,7 @@ This script performs comprehensive analysis of cross-telescope transfer learning
 3. Reverse transfer (TESS→Kepler and Kepler→TESS)
 4. Telescope-specific baseline models
 """
-h
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
