@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 from common.base_pipeline import BasePipeline
 
-
 class MLPPipeline(BasePipeline):
     
     def __init__(self):
