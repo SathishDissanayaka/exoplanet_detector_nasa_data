@@ -4,7 +4,6 @@ This is the first step before any model-specific preprocessing.
 """
 import pandas as pd
 
-cf
 class DatasetMerger:
     """
     Handles integrating of Kepler and TESS telescope datasets.
