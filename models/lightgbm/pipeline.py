@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 from common.base_pipeline import BasePipeline
 
-
 class LightGBMPipeline(BasePipeline):
     """
     LightGBM-specific preprocessing pipeline with advanced feature engineering.
