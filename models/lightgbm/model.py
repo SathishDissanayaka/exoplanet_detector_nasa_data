@@ -7,7 +7,6 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 from models.tess_first_training import split_tess_first_data
 from common.transformers import RobustStellarScaler, TelescopeDistributionMatcher, RobustUncertaintyCompressor
 
-
 def train_lightgbm_model(X, y, label_encoder, training_params=None):
     """
     Train a LightGBM model with the given features and target.
