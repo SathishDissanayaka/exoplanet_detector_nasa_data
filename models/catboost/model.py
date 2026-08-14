@@ -10,7 +10,6 @@ except ImportError:
     CATBOOST_AVAILABLE = False
     print("Warning: CatBoost not installed. Install with: pip install catboost")
 
-
 def train_catboost_model(X, y, label_encoder, training_params=None):
     """
     Train a CatBoost model with the given features and target.
