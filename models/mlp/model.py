@@ -14,7 +14,6 @@ from sklearn.metrics import (
     classification_report
 )
 
-
 def train_mlp_model(X, y, label_encoder, training_params=None):
     """
     Train an MLP model with the given features and target.
